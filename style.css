@@ -150,4 +150,68 @@ button:hover {
         display: none;   /* buttons print me hide */
     }
 }
+/* =========================
+   MOBILE RESPONSIVE FIX
+   ========================= */
+@media (max-width: 768px) {
+
+    body {
+        justify-content: center;   /* center align on mobile */
+        padding: 15px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 380px;
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    /* Header text */
+    .tag {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* Title with logo */
+    .title-box {
+        flex-direction: row;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .title-box img {
+        width: 30px;   /* logo thoda chhota */
+    }
+
+    .title-box h1 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    /* Form fields one-by-one */
+    .form-grid {
+        grid-template-columns: 1fr;   /* single column */
+        gap: 12px;
+    }
+
+    /* Buttons stacked */
+    .btn-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    /* Result box mobile friendly */
+    #result {
+        font-size: 14px;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+}
+
 
