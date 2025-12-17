@@ -10,7 +10,7 @@ body {
     height: 100vh;
     background:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("Gemini_Generated_Image_2xbnqe2xbnqe2xbn.png");
+        url("UPPCL 12.png");
     background-size: cover;
     background-position: center;
 
@@ -150,3 +150,4 @@ button:hover {
         display: none;   /* buttons print me hide */
     }
 }
+
