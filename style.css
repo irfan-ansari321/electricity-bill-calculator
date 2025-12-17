@@ -151,66 +151,76 @@ button:hover {
     }
 }
 /* =========================
-   MOBILE RESPONSIVE FIX
+   FINAL MOBILE CENTER FIX
    ========================= */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 
     body {
-        justify-content: center;   /* center align on mobile */
-        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        background-position: center;
     }
 
     .container {
         width: 100%;
-        max-width: 380px;
-        padding: 20px;
-        border-radius: 14px;
+        max-width: 420px;   /* 🔥 calculator bada dikhe */
+        padding: 24px;
+        border-radius: 18px;
+        margin: 0 auto;
     }
 
-    /* Header text */
-    .tag {
-        font-size: 14px;
-        text-align: center;
-    }
-
-    /* Title with logo */
+    /* Title + logo */
     .title-box {
         flex-direction: row;
         justify-content: center;
-        gap: 8px;
-    }
-
-    .title-box img {
-        width: 30px;   /* logo thoda chhota */
-    }
-
-    .title-box h1 {
-        font-size: 20px;
-        text-align: center;
-    }
-
-    /* Form fields one-by-one */
-    .form-grid {
-        grid-template-columns: 1fr;   /* single column */
-        gap: 12px;
-    }
-
-    /* Buttons stacked */
-    .btn-grid {
-        grid-template-columns: 1fr;
+        align-items: center;
         gap: 10px;
     }
 
-    button {
-        font-size: 15px;
-        padding: 12px;
+    .title-box img {
+        width: 32px;
     }
 
-    /* Result box mobile friendly */
-    #result {
+    .title-box h1 {
+        font-size: 22px;   /* heading bada */
+        line-height: 1.2;
+    }
+
+    .tag {
         font-size: 14px;
-        max-height: 220px;
-        overflow-y: auto;
+        margin-bottom: 8px;
+    }
+
+    /* Inputs full width */
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    input {
+        height: 44px;
+        font-size: 15px;
+    }
+
+    /* Buttons full width & big */
+    .btn-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    button {
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    /* Result box bigger */
+    #result {
+        min-height: 140px;
+        max-height: 260px;
+        font-size: 15px;
     }
 }
 
