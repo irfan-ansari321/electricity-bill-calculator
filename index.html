@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electricity Bill Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- UPPCL Header -->
+    <div class="header-box">
+        <img src="Uppcl-logo.png" alt="UPPCL Logo" class="uppcl-logo">
+        <span class="tag">UPPCL • Electricity Billing</span>
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="main-title">Electricity Bill Calculator</h1>
+
+    <!-- Form in calculator shape -->
+    <div class="form-grid">
+
+        <div>
+            <label>Consumer ID</label>
+            <input type="text" id="cid">
+        </div>
+
+        <div>
+            <label>Consumer Name</label>
+            <input type="text" id="cname">
+        </div>
+
+        <div>
+            <label>Previous Reading</label>
+            <input type="number" id="prev">
+        </div>
+
+        <div>
+            <label>Current Reading</label>
+            <input type="number" id="curr">
+        </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-grid">
+        <button onclick="calculate()">Calculate Bill</button>
+        <button onclick="printBill()" id="printBtn" disabled>Print Bill</button>
+
+    </div>
+
+    <!-- Result -->
+    <div id="result"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* PAGE BACKGROUND */
+body {
+    height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url("Gemini_Generated_Image_2xbnqe2xbnqe2xbn.png");
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 130px;
+}
+
+/* MAIN CALCULATOR CARD */
+.container {
+    background: #ffffff;
+    width: 420px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* ================= HEADER (LOGO + UPPCL TEXT) ================= */
+
+.header-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+/* UPPCL LOGO */
+.header-box img {
+    height: 22px;        /* LOGO HEIGHT */
+    width: auto;
+}
+
+/* UPPCL TEXT (SAME SIZE AS LOGO) */
+.tag {
+    font-size: 22px;     /* SAME AS LOGO */
+    line-height: 22px;
+    font-weight: 700;
+    color: #0057b8;
+    text-align: center;
+}
+
+/* MAIN TITLE */
+.main-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1f4037;
+}
+
+/* ================= FORM ================= */
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* GRID = CALCULATOR SHAPE */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* BUTTONS SIDE BY SIDE */
+.btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* BUTTON STYLE */
+button {
+    padding: 12px;
+    background: #1f4037;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #16352e;
+}
+
+/* RESULT / BILL RECEIPT */
+#result {
+    grid-column: span 2;
+    margin-top: 15px;
+
+    padding: 20px;
+    min-height: 120px;
+    max-height: 260px;     /* 👈 yahin se scrolling control */
+    overflow-y: auto;     /* 👈 SCROLL ENABLE */
+
+    background: #f4fff9;
+    border: 1.5px solid #1f4037;
+    border-radius: 8px;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+/* ===== PRINT MODE FIX ===== */
+@media print {
+
+    body {
+        background: white !important;
+    }
+
+    .container {
+        box-shadow: none;
+        width: 100%;
+        padding: 20px;
+    }
+
+    #result {
+        max-height: none !important;   /* 🔥 height limit hata do */
+        overflow: visible !important;  /* 🔥 scrolling band */
+        border: 1px solid #000;
+        page-break-inside: avoid;
+    }
+
+    button {
+        display: none;   /* buttons print me hide */
+    }
+}
