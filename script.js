@@ -1,122 +1,183 @@
-// Navigation Tab Functionality
-const navLinks = document.querySelectorAll('.nav-link');
+// Language Toggle Functionality
+let currentLang = 'en';
+const langToggle = document.getElementById('langToggle');
+const langText = document.getElementById('langText');
 
-navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-        const tabName = this.textContent;
-        console.log('Switched to tab:', tabName);
-    });
+langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'hi' : 'en';
+    updateLanguage();
 });
 
-// Bill Check Functionality
-function checkBill() {
-    const accountNumber = document.getElementById('accountNumber').value;
-    const billDetails = document.getElementById('billDetails');
-    const displayAccountNo = document.getElementById('displayAccountNo');
+function updateLanguage() {
+    const elements = document.querySelectorAll('[data-en][data-hi]');
     
-    if (accountNumber.length >= 10) {
-        billDetails.style.display = 'block';
-        displayAccountNo.textContent = accountNumber;
-        billDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        billDetails.style.animation = 'fadeIn 0.5s ease-in';
-    } else {
-        alert('Please enter a valid Account Number (minimum 10 digits)');
-    }
+    elements.forEach(element => {
+        const text = element.getAttribute(data-${currentLang});
+        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.placeholder = text;
+        } else if (element.tagName === 'OPTION') {
+            element.textContent = text;
+        } else {
+            element.textContent = text;
+        }
+    });
+
+    // Update language toggle button text
+    langText.textContent = currentLang === 'en' ? 'हिंदी' : 'English';
 }
 
-// Allow Enter key to trigger bill check
-document.getElementById('accountNumber').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        checkBill();
-    }
-});
+// Login Form Handling
+const loginForm = document.getElementById('loginForm');
 
-// Service Card Click Handlers
-const serviceCards = document.querySelectorAll('.service-card');
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const accountNumber = document.getElementById('accountNumber').value;
+    const password = document.getElementById('password').value;
 
-serviceCards.forEach(card => {
-    card.addEventListener('click', function() {
-        const serviceName = this.querySelector('h3').textContent;
-        console.log('Service clicked:', serviceName);
-        alert('Redirecting to ' + serviceName + ' page...');
-    });
-});
-
-// Quick Links Click Handlers
-const linkItems = document.querySelectorAll('.link-item');
-
-linkItems.forEach(link => {
-    link.addEventListener('click', function() {
-        const linkName = this.querySelector('span').textContent;
-        console.log('Quick link clicked:', linkName);
-        alert('Opening ' + linkName + '...');
-    });
-});
-
-// Update Items Click Handlers
-const updateItems = document.querySelectorAll('.update-item');
-
-updateItems.forEach(item => {
-    item.addEventListener('click', function() {
-        const updateTitle = this.querySelector('.update-title').textContent;
-        console.log('Update clicked:', updateTitle);
-        alert('Opening: ' + updateTitle);
-    });
-});
-
-// Input Formatting - Only allow numbers in account number field
-document.getElementById('accountNumber').addEventListener('input', function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '');
-});
-
-// Auto-hide bill details when input is cleared
-document.getElementById('accountNumber').addEventListener('input', function() {
-    if (this.value.length === 0) {
-        document.getElementById('billDetails').style.display = 'none';
-    }
-});
-
-// Pay Now Button Handler
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('btn-pay')) {
-        alert('Redirecting to payment gateway...\n\nAmount: ₹2,845\nAccount: ' + 
-              document.getElementById('displayAccountNo').textContent);
-    }
-    
-    if (e.target.classList.contains('btn-download') || e.target.closest('.btn-download')) {
-        alert('Downloading bill PDF...');
-        console.log('Bill downloaded for account:', 
-                   document.getElementById('displayAccountNo').textContent);
-    }
-});
-
-// Login Button Handler
-document.querySelector('.btn-login').addEventListener('click', function() {
-    alert('Redirecting to login page...');
-    console.log('Login button clicked');
-});
-
-// Language Toggle Handler
-document.querySelector('.btn-lang').addEventListener('click', function() {
-    const currentLang = this.textContent;
-    if (currentLang === 'हिंदी') {
-        this.textContent = 'English';
-        alert('Language changed to Hindi (Demo)');
+    if (accountNumber && password) {
+        const message = currentLang === 'en' 
+            ? Login Successful!\nAccount: ${accountNumber} 
+            : लॉगिन सफल!\nखाता: ${accountNumber};
+        alert(message);
+        loginForm.reset();
     } else {
-        this.textContent = 'हिंदी';
-        alert('Language changed to English');
+        const message = currentLang === 'en' 
+            ? 'Please fill all fields!' 
+            : 'कृपया सभी फ़ील्ड भरें!';
+        alert(message);
     }
 });
 
-// Console welcome message
-console.log('%c Welcome to UPPCL Portal ', 
-            'background: #1e3a8a; color: white; font-size: 20px; padding: 10px;');
-console.log('Developed with HTML, CSS, and JavaScript');
+// Billing Form Handling
+const billingForm = document.getElementById('billingForm');
+const billInfo = document.querySelector('.bill-info');
 
-// Track page load time
-window.addEventListener('load', function() {
-    const loadTime = performance.now();
-    console.log('Page loaded in ' + Math.round(loadTime) + 'ms');
+billingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    billInfo.style.display = 'block';
+    const message = currentLang === 'en' 
+        ? 'Bill details loaded successfully!' 
+        : 'बिल विवरण सफलतापूर्वक लोड हुआ!';
+    alert(message);
+});
+
+// Pay Now Button
+const payBtn = document.querySelector('.pay-btn');
+payBtn.addEventListener('click', () => {
+    const message = currentLang === 'en' 
+        ? 'Redirecting to payment gateway...' 
+        : 'भुगतान गेटवे पर रीडायरेक्ट किया जा रहा है...';
+    alert(message);
+});
+
+// New Connection Form Handling
+const connectionForm = document.getElementById('connectionForm');
+
+connectionForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = currentLang === 'en' 
+        ? 'Application submitted successfully!\nYou will receive a confirmation email shortly.' 
+        : 'आवेदन सफलतापूर्वक जमा किया गया!\nआपको जल्द ही एक पुष्टिकरण ईमेल प्राप्त होगा।';
+    alert(message);
+    connectionForm.reset();
+});
+
+// Complaint Form Handling
+const complaintForm = document.getElementById('complaintForm');
+
+complaintForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const complaintNumber = 'UPPCL' + Math.floor(Math.random() * 1000000);
+    const message = currentLang === 'en' 
+        ? Complaint registered successfully!\nComplaint Number: ${complaintNumber}\nYou will be contacted within 48 hours. 
+        : शिकायत सफलतापूर्वक दर्ज की गई!\nशिकायत संख्या: ${complaintNumber}\n48 घंटे के भीतर आपसे संपर्क किया जाएगा।;
+    alert(message);
+    complaintForm.reset();
+});
+
+// Smooth Scrolling for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Form Validation Helper
+function validateForm(form) {
+    const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            isValid = false;
+            input.style.borderColor = 'red';
+        } else {
+            input.style.borderColor = '#ddd';
+        }
+    });
+
+    return isValid;
+}
+
+// Mobile Number Validation
+const mobileInputs = document.querySelectorAll('input[type="tel"]');
+mobileInputs.forEach(input => {
+    input.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
+});
+
+// Account Number Validation (only numbers)
+const accountInputs = document.querySelectorAll('input[type="text"][placeholder*="Account"]');
+accountInputs.forEach(input => {
+    input.addEventListener('input', (e) => {
+        if (e.target.id === 'accountNumber' || e.target.parentElement.querySelector('label').textContent.includes('Account')) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        }
+    });
+});
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('UPPCL Website Loaded Successfully!');
+    
+    // Set initial language
+    updateLanguage();
+    
+    // Add active class to current nav item
+    const currentSection = window.location.hash || '#home';
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        if (link.getAttribute('href') === currentSection) {
+            link.style.color = '#ffd700';
+        }
+    });
+});
+
+// Update active nav item on scroll
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.section, .login-section');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.style.color = 'white';
+        if (link.getAttribute('href') === #${current}) {
+            link.style.color = '#ffd700';
+        }
+    });
 });
