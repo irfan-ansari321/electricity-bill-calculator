@@ -1,82 +1,182 @@
-let billCalculated = false;
+// Navigation Tab Functionality
+const navLinks = document.querySelectorAll('.nav-link');
 
-window.onload = function () {
-    document.getElementById("cid").value = "";
-    document.getElementById("cname").value = "";
-    document.getElementById("prev").value = "";
-    document.getElementById("curr").value = "";
-    document.getElementById("result").innerHTML = "";
+navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        // Remove active class from all links
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Get the tab name
+        const tabName = this.getAttribute('data-tab');
+        console.log('Switched to tab:', tabName);
+        
+        // Here you can add logic to show/hide different sections based on tab
+    });
+});
 
-    document.getElementById("printBtn").disabled = true;
-};
-
-function calculate() {
-
-    let cid = document.getElementById("cid").value;
-    let cname = document.getElementById("cname").value;
-    let prev = Number(document.getElementById("prev").value);
-    let curr = Number(document.getElementById("curr").value);
-
-    if (cid === "" || cname === "" || document.getElementById("prev").value === "" || document.getElementById("curr").value === "") {
-        alert("Please fill all details");
-        return;
-    }
-
-    if (curr < prev) {
-        alert("Current reading cannot be less than previous reading");
-        return;
-    }
-
-    let units = curr - prev;
-
-    // Energy charge (monthly slab)
-    let energyCharge = 0;
-    if (units <= 100) {
-        energyCharge = units * 4;
-    } else if (units <= 200) {
-        energyCharge = (100 * 4) + ((units - 100) * 5);
+// Bill Check Functionality
+function checkBill() {
+    const accountNumber = document.getElementById('accountNumber').value;
+    const billDetails = document.getElementById('billDetails');
+    const displayAccountNo = document.getElementById('displayAccountNo');
+    
+    // Validate account number (minimum 10 digits)
+    if (accountNumber.length >= 10) {
+        // Show bill details
+        billDetails.style.display = 'block';
+        displayAccountNo.textContent = accountNumber;
+        
+        // Smooth scroll to bill details
+        billDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Add animation
+        billDetails.style.animation = 'fadeIn 0.5s ease-in';
     } else {
-        energyCharge = (100 * 4) + (100 * 5) + ((units - 200) * 6);
+        alert('Please enter a valid Account Number (minimum 10 digits)');
     }
-
-    let fixedCharge = 150;
-    let fca = units * 0.5;
-    let tax = energyCharge * 0.05;
-
-    let subsidy = 0;
-    if (units <= 100) subsidy = 100;
-    else if (units <= 200) subsidy = 50;
-
-    let totalBill = energyCharge + fixedCharge + fca + tax - subsidy;
-
-    let dateTime = new Date().toLocaleString();
-
-    document.getElementById("result").innerHTML = `
-        <b>Electricity Bill Receipt</b><br><br>
-
-        <b>Consumer Name:</b> ${cname}<br>
-        <b>Consumer ID:</b> ${cid}<br>
-        <b>Billing Type:</b> Monthly<br>
-        <b>Date & Time:</b> ${dateTime}<br><br>
-
-        <b>Units Consumed:</b> ${units}<br>
-        <b>Energy Charges:</b> ₹${energyCharge.toFixed(2)}<br>
-        <b>Fixed Charge:</b> ₹${fixedCharge}<br>
-        <b>FCA / PPCA:</b> ₹${fca.toFixed(2)}<br>
-        <b>Tax (5%):</b> ₹${tax.toFixed(2)}<br>
-        <b>Subsidy:</b> -₹${subsidy}<br><br>
-
-        <b>Total Bill Amount:</b> ₹${totalBill.toFixed(2)}
-    `;
-
-    billCalculated = true;
-    document.getElementById("printBtn").disabled = false;
 }
 
-function printBill() {
-    if (!billCalculated) {
-        alert("Please calculate the bill first");
-        return;
+// Add fadeIn animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    window.print();
+`;
+document.head.appendChild(style);
+
+// Allow Enter key to trigger bill check
+document.getElementById('accountNumber').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        checkBill();
+    }
+});
+
+// Service Card Click Handlers
+const serviceCards = document.querySelectorAll('.service-card');
+
+serviceCards.forEach(card => {
+    card.addEventListener('click', function() {
+        const serviceName = this.querySelector('h3').textContent;
+        console.log('Service clicked:', serviceName);
+        alert(`Redirecting to ${serviceName} page...`);
+    });
+});
+
+// Quick Links Click Handlers
+const linkItems = document.querySelectorAll('.link-item');
+
+linkItems.forEach(link => {
+    link.addEventListener('click', function() {
+        const linkName = this.querySelector('span').textContent;
+        console.log('Quick link clicked:', linkName);
+        alert(`Opening ${linkName}...`);
+    });
+});
+
+// Update Items Click Handlers
+const updateItems = document.querySelectorAll('.update-item');
+
+updateItems.forEach(item => {
+    item.addEventListener('click', function() {
+        const updateTitle = this.querySelector('.update-title').textContent;
+        console.log('Update clicked:', updateTitle);
+        alert(`Opening: ${updateTitle}`);
+    });
+});
+
+// Input Formatting - Only allow numbers in account number field
+document.getElementById('accountNumber').addEventListener('input', function(e) {
+    // Remove any non-numeric characters
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// Auto-hide bill details when input is cleared
+document.getElementById('accountNumber').addEventListener('input', function() {
+    if (this.value.length === 0) {
+        document.getElementById('billDetails').style.display = 'none';
+    }
+});
+
+// Pay Now Button Handler
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-pay')) {
+        alert('Redirecting to payment gateway...\n\nAmount: ₹2,845\nAccount: ' + 
+              document.getElementById('displayAccountNo').textContent);
+    }
+    
+    // Download Button Handler
+    if (e.target.classList.contains('btn-download') || 
+        e.target.closest('.btn-download')) {
+        alert('Downloading bill PDF...');
+        console.log('Bill downloaded for account:', 
+                   document.getElementById('displayAccountNo').textContent);
+    }
+});
+
+// Smooth scroll for all internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Login Button Handler
+document.querySelector('.btn-login').addEventListener('click', function() {
+    alert('Redirecting to login page...');
+    console.log('Login button clicked');
+});
+
+// Language Toggle Handler
+document.querySelector('.btn-lang').addEventListener('click', function() {
+    const currentLang = this.textContent;
+    if (currentLang === 'हिंदी') {
+        this.textContent = 'English';
+        alert('Language changed to Hindi (Demo)');
+    } else {
+        this.textContent = 'हिंदी';
+        alert('Language changed to English');
+    }
+});
+
+// Add loading state to buttons
+function addLoadingState(button, duration = 1000) {
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.style.opacity = '0.6';
+    button.textContent = 'Loading...';
+    
+    setTimeout(() => {
+        button.disabled = false;
+        button.style.opacity = '1';
+        button.textContent = originalText;
+    }, duration);
 }
+
+// Console welcome message
+console.log('%c Welcome to UPPCL Portal ', 
+            'background: #1e3a8a; color: white; font-size: 20px; padding: 10px;');
+console.log('Developed with HTML, CSS, and JavaScript');
+
+// Track page load time
+window.addEventListener('load', function() {
+    const loadTime = performance.now();
+    console.log(`Page loaded in ${Math.round(loadTime)}ms`);
+});
