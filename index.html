@@ -1,62 +1,384 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Electricity Bill Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCL - Uttar Pradesh Power Corporation Ltd.</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>UPPCL</h1>
+                        <p>Uttar Pradesh Power Corporation Ltd.</p>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button class="btn-login">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Login
+                    </button>
+                    <button class="btn-lang">हिंदी</button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-links">
+                <button class="nav-link active" data-tab="home">Home</button>
+                <button class="nav-link" data-tab="pay-bill">Pay Bill</button>
+                <button class="nav-link" data-tab="new-connection">New Connection</button>
+                <button class="nav-link" data-tab="complaints">Complaints</button>
+                <button class="nav-link" data-tab="services">Services</button>
+                <button class="nav-link" data-tab="contact">Contact</button>
+            </div>
+        </div>
+    </nav>
 
-    <!-- UPPCL Header -->
-    <div class="header-box">
-        <img src="Uppcl-logo 12.png" alt="UPPCL Logo" class="uppcl-logo">
-        <span class="tag">UPPCL • Electricity Billing</span>
+    <!-- Alert Banner -->
+    <div class="alert-banner">
+        <div class="container">
+            <div class="alert-content">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <p><strong>Notice:</strong> Scheduled maintenance on 25th Dec 2025 from 10 AM to 2 PM in sectors 15-20</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Title -->
-    <h1 class="main-title">Electricity Bill Calculator</h1>
+    <div class="container main-container">
+        <div class="layout">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Bill Check Section -->
+                <div class="card bill-check">
+                    <h2>Quick Bill Check & Payment</h2>
+                    <div class="bill-input-group">
+                        <input type="text" id="accountNumber" placeholder="Enter Account Number (e.g., 1234567890)" maxlength="12">
+                        <button class="btn-primary" onclick="checkBill()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            Check
+                        </button>
+                    </div>
 
-    <!-- Form in calculator shape -->
-    <div class="form-grid">
+                    <!-- Bill Details (Hidden by default) -->
+                    <div id="billDetails" class="bill-details" style="display: none;">
+                        <div class="bill-header">
+                            <div>
+                                <h3>Bill Details</h3>
+                                <p class="account-no">Account No: <span id="displayAccountNo"></span></p>
+                            </div>
+                            <span class="status-badge">Active</span>
+                        </div>
+                        <div class="bill-info-grid">
+                            <div>
+                                <p class="label">Consumer Name</p>
+                                <p class="value">Rajesh Kumar</p>
+                            </div>
+                            <div>
+                                <p class="label">Bill Month</p>
+                                <p class="value">December 2025</p>
+                            </div>
+                            <div>
+                                <p class="label">Units Consumed</p>
+                                <p class="value">348 kWh</p>
+                            </div>
+                            <div>
+                                <p class="label">Due Date</p>
+                                <p class="value due-date">28 Dec 2025</p>
+                            </div>
+                        </div>
+                        <div class="amount-box">
+                            <span>Total Amount Due</span>
+                            <span class="amount">₹2,845</span>
+                        </div>
+                        <div class="bill-actions">
+                            <button class="btn-pay">Pay Now</button>
+                            <button class="btn-download">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-        <div>
-            <label>Consumer ID</label>
-            <input type="text" id="cid">
+                <!-- Services Grid -->
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                        </div>
+                        <div class="service-info">
+                            <h3>Pay Bill Online</h3>
+                            <p>Quick & secure payment</p>
+                        </div>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="service-info">
+                            <h3>View Bill</h3>
+                            <p>Check your electricity bill</p>
+                        </div>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div class="service-info">
+                            <h3>New Connection</h3>
+                            <p>Apply for new connection</p>
+                        </div>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-info">
+                            <h3>Register Complaint</h3>
+                            <p>Report power issues</p>
+                        </div>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Updates Section -->
+                <div class="card updates-section">
+                    <h3 class="section-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        Important Updates
+                    </h3>
+                    <div class="updates-list">
+                        <div class="update-item">
+                            <div class="update-date">20 Dec 2025</div>
+                            <div class="update-title">New Tariff Rates Effective from January 2026</div>
+                            <span class="update-tag">Tariff</span>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-date">18 Dec 2025</div>
+                            <div class="update-title">Online Payment Portal Maintenance on 22nd December</div>
+                            <span class="update-tag">Maintenance</span>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-date">15 Dec 2025</div>
+                            <div class="update-title">Solar Rooftop Subsidy Scheme Extended</div>
+                            <span class="update-tag">Scheme</span>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-date">10 Dec 2025</div>
+                            <div class="update-title">Smart Meter Installation Drive in Urban Areas</div>
+                            <span class="update-tag">Update</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Quick Links -->
+                <div class="card quick-links">
+                    <h3>Quick Links</h3>
+                    <div class="links-list">
+                        <button class="link-item">
+                            <span>Tariff Schedule</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Power Cut Schedule</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Name Transfer</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Load Enhancement</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Meter Installation</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Subsidy Schemes</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Forms & Downloads</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="link-item">
+                            <span>Office Locations</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contact Card -->
+                <div class="card contact-card">
+                    <h3>24/7 Helpline</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <div>
+                                <p class="contact-label">Toll Free</p>
+                                <p class="contact-value">1912</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <div>
+                                <p class="contact-label">Power Fault</p>
+                                <p class="contact-value">1800-180-3002</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="card stats-card">
+                    <h3>Our Reach</h3>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <p class="stat-label">Total Consumers</p>
+                            <p class="stat-value">3.5 Cr+</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Districts Covered</p>
+                            <p class="stat-value">75</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Daily Supply</p>
+                            <p class="stat-value">18-20 Hours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label>Consumer Name</label>
-            <input type="text" id="cname">
-        </div>
-
-        <div>
-            <label>Previous Reading</label>
-            <input type="number" id="prev">
-        </div>
-
-        <div>
-            <label>Current Reading</label>
-            <input type="number" id="curr">
-        </div>
-
     </div>
 
-    <!-- Buttons -->
-    <div class="btn-grid">
-        <button onclick="calculate()">Calculate Bill</button>
-        <button onclick="printBill()" id="printBtn" disabled>Print Bill</button>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>About UPPCL</h4>
+                    <ul>
+                        <li>About Us</li>
+                        <li>Vision & Mission</li>
+                        <li>Organization</li>
+                        <li>Tenders</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Consumer Services</h4>
+                    <ul>
+                        <li>Bill Payment</li>
+                        <li>New Connection</li>
+                        <li>Complaints</li>
+                        <li>Tariff Info</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Important Links</h4>
+                    <ul>
+                        <li>RTI Portal</li>
+                        <li>Career</li>
+                        <li>Downloads</li>
+                        <li>Sitemap</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <p>UPPCL Corporate Office</p>
+                    <p>Shakti Bhawan, Lucknow</p>
+                    <p>Uttar Pradesh - 226001</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Uttar Pradesh Power Corporation Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-    </div>
-
-    <!-- Result -->
-    <div id="result"></div>
-
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
